@@ -5,12 +5,13 @@ import java.util.*;
 public class FormulaeSearchAgent {
 
     private String currentKeyword = "";
+    private String lastWord;
 
     private List<List<String>> requiredSymbols = new ArrayList<>();
 
     public static final int SYMBOL_PREFIX = 0;
     public static final int UNIT_PREFIX = 1;
-    public static final List<String> PREFIXES = List.of("symbol", "unit");
+    public static final List<String> PREFIXES = List.of("sym", "unit");
 
     /**
      * keyword = Prefix + space + Body
@@ -62,13 +63,16 @@ public class FormulaeSearchAgent {
     public List<String> getAssociatedNames() {
         var nameList = new ArrayList<String>();
 
-        ArrayList<String> keySet = new ArrayList<>();  // the set with all names
-        keySet.addAll(FormulaeDatabase.SYMBOL_NAMES.keySet());
-        keySet.addAll(FormulaeDatabase.UNIT_NAMES.keySet());
-        keySet.forEach(name -> {
+        FormulaeDatabase.SYMBOL_NAMES.keySet().forEach(name -> {
             // contains but not equal to
             if (name.startsWith(currentKeyword) && !name.equals(currentKeyword))
-                nameList.add(name);
+                nameList.add(PREFIXES.get(SYMBOL_PREFIX) + " " + name);
+        });
+
+        FormulaeDatabase.UNIT_NAMES.keySet().forEach(name -> {
+            // contains but not equal to
+            if (name.startsWith(currentKeyword) && !name.equals(currentKeyword))
+                nameList.add(PREFIXES.get(UNIT_PREFIX) + " " + name);
         });
 
         return nameList;

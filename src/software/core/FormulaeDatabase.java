@@ -38,23 +38,23 @@ public class FormulaeDatabase {
     }
 
     /**
-     * Access the name of unit 'u' with:
+     * Access the variable symbol corresponding to unit 'u' with:
      * FormulaeDatabase.UNITS.get(u);
      * FormulaeDatabase.UNITS.set(u, value)
      */
     public static final HashMap<String, String> UNITS;
 
     /**
-     * Access the name of unit 'n' with:
-     * FormulaeDatabase.SYMBOL_NAMES.get(n);
-     * FormulaeDatabase.SYMBOL_NAMES.set(n, value)
+     * Access the name of symbol 's' with:
+     * FormulaeDatabase.SYMBOL_NAMES.get(s);
+     * FormulaeDatabase.SYMBOL_NAMES.set(s, value)
      */
     public static final HashMap<String, String> SYMBOL_NAMES;
 
     /**
-     * Access the name of unit 'n' with:
-     * FormulaeDatabase.SYMBOL_NAMES.get(n);
-     * FormulaeDatabase.SYMBOL_NAMES.set(n, value)
+     * Access the symbol of unit name 'n' with:
+     * FormulaeDatabase.UNIT_NAMES.get(n);
+     * FormulaeDatabase.UNIT_NAMES.set(n, value)
      */
     public static final HashMap<String, String> UNIT_NAMES;
 

@@ -11,6 +11,7 @@ import java.util.List;
 
 public class SearchFrame extends JFrame {
 
+    // basic window control
     private static SearchFrame instance;
     public static void showWindow() {
         if (instance == null)
@@ -93,6 +94,16 @@ public class SearchFrame extends JFrame {
 
         // ---set up pop menu---
 
+        JMenuItem symButton = new JMenuItem("Search symbol");
+        symButton.addActionListener(
+                e -> ensurePrefix(FormulaeSearchAgent.PREFIXES.get(FormulaeSearchAgent.SYMBOL_PREFIX)));
+        optionMenu.add(symButton);
+
+        JMenuItem unitButton = new JMenuItem("Search unit");
+        unitButton.addActionListener(
+                e -> ensurePrefix(FormulaeSearchAgent.PREFIXES.get(FormulaeSearchAgent.UNIT_PREFIX)));
+        optionMenu.add(unitButton);
+
         JMenuItem exitButton = new JMenuItem("Quit");
         exitButton.addActionListener(e -> System.exit(0));
         optionMenu.add(exitButton);
@@ -103,6 +114,14 @@ public class SearchFrame extends JFrame {
                 optionMenu.show(logoLabel, e.getX(), e.getY());
             }
         });
+    }
+
+    private void ensurePrefix(String prefix) {
+        var text = searchTextField.getText();
+        if (!searchTextField.getText().startsWith(prefix)) {
+            var newText = prefix + " " + text;
+            searchTextField.setText(newText);
+        }
     }
 
     private void autoResize() {
