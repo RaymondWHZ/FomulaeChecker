@@ -2,17 +2,11 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="software.gui.SearchFrame">
   <grid id="27dc6" binding="searchPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="70" y="94" width="435" height="68"/>
+      <xy x="70" y="94" width="435" height="79"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <component id="acc91" class="javax.swing.JList" binding="itemList">
-        <constraints border-constraint="South"/>
-        <properties>
-          <font size="28"/>
-        </properties>
-      </component>
       <component id="aba77" class="javax.swing.JTextField" binding="searchTextField">
         <constraints border-constraint="Center"/>
         <properties>
@@ -25,6 +19,12 @@
         <properties>
           <icon value="software/resources/physics icon m.png"/>
           <text value=""/>
+        </properties>
+      </component>
+      <component id="acc91" class="javax.swing.JList" binding="itemList">
+        <constraints border-constraint="South"/>
+        <properties>
+          <font size="28"/>
         </properties>
       </component>
     </children>
