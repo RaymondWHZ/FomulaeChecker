@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-// whole class designed and created by Raymond 5020 to auto save data
+//whole class designed and created by Raymond 5020 to auto save data
 public class FormulaeDatabase {
-
-    private static final String FILE_EXTENSION = ".data";
 
     /**
      * Indices to indicate expression and description
@@ -58,14 +56,27 @@ public class FormulaeDatabase {
      */
     public static final HashMap<String, String> UNIT_NAMES;
 
+    /**
+     * The directory under which the JAR file or class files exists.
+     */
     private static final String DEFAULT_DIRECTORY;
-    private static <T> T makeAutoSaveProperty(String defaultFileName, T newInstance) {
+
+    /**
+     * The default file extension for every database objects.
+     */
+    private static final String FILE_EXTENSION = ".data";
+
+    /**
+     * Read object from file if the file exists otherwise use the default instance,
+     * creating a save event at the same time.
+     */
+    private static <T> T makeAutoSaveProperty(String defaultFileName, T defaultInstance) {
         var defaultFile = new File(DEFAULT_DIRECTORY + defaultFileName + FILE_EXTENSION);
 
         // create from file or newInstance
         T instance;
         try {
-            instance = (defaultFile.exists()) ? ObjectIO.importObject(defaultFile) : newInstance;
+            instance = (defaultFile.exists()) ? ObjectIO.importObject(defaultFile) : defaultInstance;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
@@ -84,15 +95,20 @@ public class FormulaeDatabase {
     }
 
     static {
+
+        // there may be multiple directories in class path
+        // we only need the first one
         var sepChar = System.getProperty("path.separator");
         var directory = System.getProperty("java.class.path").split(sepChar)[0];
-        if (directory.endsWith(".jar")) {
+
+        if (directory.endsWith(".jar")) {  // set to the jar file if running as a jar
             var lastIndex = directory.lastIndexOf("/");
             DEFAULT_DIRECTORY = directory.substring(0, lastIndex + 1);
         }
-        else
+        else  // set to current working directory if running as class files
             DEFAULT_DIRECTORY = "";
 
+        // initialize databases
         FORMULAE = makeAutoSaveProperty("Formulae", new ArrayList<>());
         UNITS = makeAutoSaveProperty("Units", new HashMap<>());
         SYMBOL_NAMES = makeAutoSaveProperty("Symbol Names", new HashMap<>());

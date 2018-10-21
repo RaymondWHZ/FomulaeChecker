@@ -57,15 +57,18 @@ public class SearchFrame extends JFrame {
         searchTextField.getDocument().addDocumentListener(new DocumentListener() {
             private void change() {
                 var keyword = searchTextField.getText();
-                if (keyword.isEmpty()) {
+
+                if (keyword.isEmpty()) {  // do nothing for an empty keyword
                     associatedNames = List.of();
                     searchResult = List.of();
                 }
-                else {
+                else {  // search for formulae through search agent
                     searchAgent.setKeyword(searchTextField.getText());
                     associatedNames = searchAgent.getAssociatedNames();
                     searchResult = searchAgent.getFormulaeResult();
                 }
+
+                // update list and window appearance
                 itemList.setModel(resultListModel);
                 itemList.updateUI();
                 autoResize();
@@ -87,6 +90,8 @@ public class SearchFrame extends JFrame {
 
         itemList.addListSelectionListener(e -> {
             var index = itemList.getSelectedIndex();
+
+            // deal with associated names clicked
             if (index >= 0 && index < associatedNames.size())
                 searchTextField.setText(associatedNames.get(index));
         });
@@ -116,6 +121,9 @@ public class SearchFrame extends JFrame {
         });
     }
 
+    /**
+     * @param prefix Add this to the front of keyword is it is not currently.
+     */
     private void ensurePrefix(String prefix) {
         var text = searchTextField.getText();
         if (!searchTextField.getText().startsWith(prefix)) {
@@ -131,6 +139,7 @@ public class SearchFrame extends JFrame {
         setSize(FIXED_WIDTH, newHeight);
     }
 
+    // whole class created by Raymond 5020 to customize list behavior
     private class ResultListModel extends AbstractListModel<String> {
         @Override
         public int getSize() {
@@ -141,7 +150,7 @@ public class SearchFrame extends JFrame {
         public String getElementAt(int index) {
             var asSize = associatedNames.size();
             if (index < asSize)
-                return ">> " + associatedNames.get(index);
+                return ">> " + associatedNames.get(index);  // add associated names
             return searchResult.get(index - asSize).get(FormulaeDatabase.EXPRESSION);
         }
     }

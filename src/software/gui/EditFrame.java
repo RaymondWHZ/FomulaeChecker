@@ -19,35 +19,37 @@ public class EditFrame extends JFrame {
     }
 
     private JPanel editPanel;
-    private JTabbedPane editTabbedPane;
 
+    private ArrayList<ArrayList<String>> formulae = FormulaeDatabase.FORMULAE;
+    private int currentFormulaIndex;
+    private ArrayList<String> currentFormula;
     private JButton newButton;
     private JList<String> formulaeList;
+    private FormulaeListModel formulaeListModel = new FormulaeListModel();
 
     private JTextField expressionTextField;
     private JTextArea descriptionTextArea;
+    private JLabel formulaNotSavedLabel;
     private JButton deleteButton;
     private JButton doneButton;
 
-    private JTextPane unitNamesTextPane;
     private JTextPane unitsTextPane;
-    private JLabel formulaNotSavedLabel;
     private JButton saveUnitsButton;
+
+    private JTextPane unitNamesTextPane;
     private JButton saveUnitNamesButton;
+
     private JTextPane symbolNameTextPane;
     private JButton saveSymbolNamesButton;
 
-    private ArrayList<ArrayList<String>> formulae = FormulaeDatabase.FORMULAE;
-    private FormulaeListModel formulaeListModel = new FormulaeListModel();
-    private int currentIndex;
-    private ArrayList<String> currentFormula;
-
     // created by Raymond 5020 to initialize window
     private EditFrame() {
+        // basic initialization
         setContentPane(editPanel);
         setLocation(150, 250);
         setSize(600, 300);
 
+        // exit when this window closes
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
@@ -56,43 +58,44 @@ public class EditFrame extends JFrame {
         formulaeList.setModel(formulaeListModel);
 
         formulaeList.addListSelectionListener(e -> {
-            currentIndex = formulaeList.getSelectedIndex();
-            if (currentIndex == -1) {
+            currentFormulaIndex = formulaeList.getSelectedIndex();
+            if (currentFormulaIndex == -1) {  // if nothing selected
                 setDetailEnabled(false);
                 return;
             }
+            currentFormula = FormulaeDatabase.FORMULAE.get(currentFormulaIndex);  // change current formula
 
-            setDetailEnabled(true);
-            currentFormula = FormulaeDatabase.FORMULAE.get(currentIndex);
+            // update detail panel
             updateDetail();
+            setDetailEnabled(true);
             formulaNotSavedLabel.setVisible(false);
         });
 
-        newButton.addActionListener(e -> {
-            formulaeListModel.addNewFormula();
-        });
+        newButton.addActionListener(e -> formulaeListModel.addNewFormula());
 
 
         // --- detail panel ---
 
         setDetailEnabled(false);
 
+        // add text changed event
         var formulaChangeAnnouncer = new ChangeAnnouncer(formulaNotSavedLabel);
         expressionTextField.getDocument().addDocumentListener(formulaChangeAnnouncer);
         descriptionTextArea.getDocument().addDocumentListener(formulaChangeAnnouncer);
 
+        // add save event
         doneButton.addActionListener(e -> {
             saveDetail();
             formulaeList.updateUI();
             formulaNotSavedLabel.setVisible(false);
         });
 
-        deleteButton.addActionListener(e -> {
-            formulaeListModel.removeFormula(currentIndex);
-        });
+        // add remove event
+        deleteButton.addActionListener(e -> formulaeListModel.removeFormula(currentFormulaIndex));
 
 
         // --- edit panels (symbol name, unit, unit names) ---
+
         setupPropertiesEditPane(symbolNameTextPane, saveSymbolNamesButton, FormulaeDatabase.SYMBOL_NAMES);
         setupPropertiesEditPane(unitsTextPane, saveUnitsButton, FormulaeDatabase.UNITS);
         setupPropertiesEditPane(unitNamesTextPane, saveUnitNamesButton, FormulaeDatabase.UNIT_NAMES);
@@ -124,22 +127,30 @@ public class EditFrame extends JFrame {
         currentFormula.set(FormulaeDatabase.DESCRIPTION, descriptionTextArea.getText());
     }
 
-    // created by Raymond 5020 to setup properties edit panels
+    // created by Raymond 5020 to quick setup properties edit panels
     private void setupPropertiesEditPane(
             JTextPane propertiesPane, JButton saveButton, HashMap<String, String> properties) {
+
+        // set text (key=value)
         propertiesPane.setText(readFromMap(properties));
 
-        var unitsChangeAnnouncer = new ChangeAnnouncer(saveButton);
-        propertiesPane.getDocument().addDocumentListener(unitsChangeAnnouncer);
+        // show that save button when edited
+        var changeAnnouncer = new ChangeAnnouncer(saveButton);
+        propertiesPane.getDocument().addDocumentListener(changeAnnouncer);
 
         saveButton.addActionListener(e -> {
             try {
+                // convert key=value to HashMap
                 var newMap = writeToMap(propertiesPane.getText());
 
+                // reset properties completely
                 properties.clear();
                 properties.putAll(newMap);
+
+                // hide save button
                 saveButton.setVisible(false);
             } catch (Exception e1) {
+                // display syntax error message
                 JOptionPane.showMessageDialog(this, e1.getMessage());
             }
         });
@@ -158,11 +169,11 @@ public class EditFrame extends JFrame {
 
         var lines = keyValuePair.split("\n");
         for (var line : lines) {
-            if (line.isEmpty())
+            if (line.isEmpty())  // skip lines with only a return
                 continue;
 
             var keyValue = line.split("=");
-            if (keyValue.length != 2)
+            if (keyValue.length != 2)  // there should a key and a value at each side of =
                 throw new Exception("Wrong syntax at line: " + line);
 
             map.put(keyValue[0], keyValue[1]);
@@ -171,7 +182,7 @@ public class EditFrame extends JFrame {
         return map;
     }
 
-    // whole class created by Raymond 5020 to customize list behavior
+    // whole class created by Raymond 5020 to customize list behavior (change the formula list together with appearance)
     private class FormulaeListModel extends AbstractListModel<String> {
 
         private static final String EMPTY_DISPLAY = "New Formula";
