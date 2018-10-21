@@ -58,15 +58,9 @@ public class FormulaeDatabase {
      */
     public static final HashMap<String, String> UNIT_NAMES;
 
-    static {
-        FORMULAE = makeAutoSaveProperty("Formulae", new ArrayList<>());
-        UNITS = makeAutoSaveProperty("Units", new HashMap<>());
-        SYMBOL_NAMES = makeAutoSaveProperty("Symbol Names", new HashMap<>());
-        UNIT_NAMES = makeAutoSaveProperty("Unit Names", new HashMap<>());
-    }
-
+    private static final String DEFAULT_DIRECTORY;
     private static <T> T makeAutoSaveProperty(String defaultFileName, T newInstance) {
-        var defaultFile = new File(defaultFileName + FILE_EXTENSION);
+        var defaultFile = new File(DEFAULT_DIRECTORY + defaultFileName + FILE_EXTENSION);
 
         // create from file or newInstance
         T instance;
@@ -87,5 +81,21 @@ public class FormulaeDatabase {
         }));
 
         return instance;
+    }
+
+    static {
+        var sepChar = System.getProperty("path.separator");
+        var directory = System.getProperty("java.class.path").split(sepChar)[0];
+        if (directory.endsWith(".jar")) {
+            var lastIndex = directory.lastIndexOf("/");
+            DEFAULT_DIRECTORY = directory.substring(0, lastIndex + 1);
+        }
+        else
+            DEFAULT_DIRECTORY = "";
+
+        FORMULAE = makeAutoSaveProperty("Formulae", new ArrayList<>());
+        UNITS = makeAutoSaveProperty("Units", new HashMap<>());
+        SYMBOL_NAMES = makeAutoSaveProperty("Symbol Names", new HashMap<>());
+        UNIT_NAMES = makeAutoSaveProperty("Unit Names", new HashMap<>());
     }
 }

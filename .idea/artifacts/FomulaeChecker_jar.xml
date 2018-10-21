@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="FomulaeChecker:jar">
+    <output-path>$USER_HOME$/Desktop/Formulae Checker</output-path>
+    <root id="archive" name="FomulaeChecker.jar">
+      <element id="module-output" name="FomulaeChecker" />
+    </root>
+  </artifact>
+</component>
