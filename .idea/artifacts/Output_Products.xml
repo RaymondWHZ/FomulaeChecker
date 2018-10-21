@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="Output Products">
+    <output-path>$USER_HOME$/Desktop/Formulae Checker</output-path>
+    <root id="root">
+      <element id="file-copy" path="$PROJECT_DIR$/Unit Names.data" />
+      <element id="file-copy" path="$PROJECT_DIR$/Formulae.data" />
+      <element id="file-copy" path="$PROJECT_DIR$/Symbol Names.data" />
+      <element id="file-copy" path="$PROJECT_DIR$/Units.data" />
+      <element id="archive" name="FormulaeChecker.jar">
+        <element id="module-output" name="FomulaeChecker" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
