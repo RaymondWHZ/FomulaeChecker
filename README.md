@@ -1,4 +1,4 @@
-# FomulaeChecker
+# FormulaeChecker
 
 > A convenient tool to check out physics formulae.
 

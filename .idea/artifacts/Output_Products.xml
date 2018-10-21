@@ -7,11 +7,12 @@
       <element id="file-copy" path="$PROJECT_DIR$/Symbol Names.data" />
       <element id="file-copy" path="$PROJECT_DIR$/Units.data" />
       <element id="archive" name="FormulaeChecker.jar">
-        <element id="module-output" name="FomulaeChecker" />
+        <element id="module-output" name="FormulaeChecker" />
         <element id="directory" name="META-INF">
           <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
         </element>
       </element>
+      <element id="file-copy" path="$PROJECT_DIR$/README.md" />
     </root>
   </artifact>
 </component>
