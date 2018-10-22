@@ -32,7 +32,7 @@ public class FormulaeSearchAgent {
     public static final List<String> PREFIXES = List.of("sym", "unit");
 
     /**
-     * created by Raymond 5020 to analyze keyword
+     * created by John 5076 to pre-analyze the keyword
      *
      * keyword = Prefix + space + Body
      *
@@ -86,7 +86,7 @@ public class FormulaeSearchAgent {
     }
 
     /**
-     * created by Raymond 5020 to create list of associated names
+     * created by Ian 5013 to create list of associated names
      *
      * Example:
      *
@@ -114,7 +114,7 @@ public class FormulaeSearchAgent {
     }
 
     /**
-     * created by Raymond 5020 to filter the formulae list
+     * created by John 5076 to filter the formulae list
      *
      * Example:
      *

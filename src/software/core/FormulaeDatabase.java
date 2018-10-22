@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-//whole class designed and created by Raymond 5020 to auto save data
+// created by Henry 5080 to auto save data
 public class FormulaeDatabase {
 
     /**
@@ -95,7 +95,6 @@ public class FormulaeDatabase {
     }
 
     static {
-
         // there may be multiple directories in class path
         // we only need the first one
         var sepChar = System.getProperty("path.separator");

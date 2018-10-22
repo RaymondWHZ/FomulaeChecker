@@ -156,14 +156,14 @@ public class EditFrame extends JFrame {
         });
     }
 
-    // created by Raymond 5020 to convert map into key=value
+    // created by Quincy 5125 to convert map into key=value
     private static String readFromMap(HashMap<String, String> map) {
         var keyValuePair = new StringBuilder();
         map.forEach((key, value) -> keyValuePair.append(key).append("=").append(value).append("\n"));
         return keyValuePair.toString();
     }
 
-    // created by Raymond 5020 to convert key=value into map
+    // created by Quincy 5125 to convert key=value into map
     private static HashMap<String, String> writeToMap(String keyValuePair) throws Exception {
         var map = new HashMap<String, String>();
 

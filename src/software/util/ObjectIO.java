@@ -2,7 +2,7 @@ package software.util;
 
 import java.io.*;
 
-// created by Raymond 5020 to read/write objects
+// created by Ian 5013 to read/write objects conveniently
 public class ObjectIO {
 
     public static void exportObject(File file, Object object) throws IOException {
