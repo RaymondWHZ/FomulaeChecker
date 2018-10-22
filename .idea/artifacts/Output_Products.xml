@@ -13,6 +13,9 @@
         </element>
       </element>
       <element id="file-copy" path="$PROJECT_DIR$/README.md" />
+      <element id="archive" name="source.zip">
+        <element id="module-source" name="FormulaeChecker" />
+      </element>
     </root>
   </artifact>
 </component>
