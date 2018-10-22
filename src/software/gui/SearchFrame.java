@@ -5,6 +5,9 @@ import software.core.FormulaeSearchAgent;
 
 import javax.swing.*;
 import javax.swing.event.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +23,18 @@ public class SearchFrame extends JFrame {
     }
 
     // configuration variables
-    private static final int FIXED_WIDTH = 500;
-    private static final int HEIGHT_LIMIT = 400;
+    private static final int FIXED_WIDTH = 600;
+    private static final int FIXED_HEIGHT = 350;
 
-    // system reference
     private JPanel searchPanel;
-    private JTextField searchTextField;
-    private JList<String> itemList;
+
     private JLabel logoLabel;
+    private JTextField searchTextField;
+
+    private JList<String> itemList;
+    private JPanel controlPanel;
+    private JLabel formulaNameLabel;
+    private JTextPane formulaDescriptionTextPane;
 
     // menu that pops when logo been clicked
     private JPopupMenu optionMenu = new JPopupMenu();
@@ -37,10 +44,11 @@ public class SearchFrame extends JFrame {
     private List<ArrayList<String>> searchResult;
     private ResultListModel resultListModel = new ResultListModel();
 
+    // created by Raymond 5020 to initialize window
     private SearchFrame() {
         // remove standard bar
         setUndecorated(true);
-        setOpacity(0.8f);
+        setOpacity(0.9f);
 
         // basic initialization
         setContentPane(searchPanel);
@@ -88,12 +96,64 @@ public class SearchFrame extends JFrame {
             public void changedUpdate(DocumentEvent e) { }
         });
 
+        formulaDescriptionTextPane.setEditable(false);
+
         itemList.addListSelectionListener(e -> {
             var index = itemList.getSelectedIndex();
+            var asSize = associatedNames.size();
 
-            // deal with associated names clicked
-            if (index >= 0 && index < associatedNames.size())
-                searchTextField.setText(associatedNames.get(index));
+            if (index < asSize) {
+                // no formula selected
+                formulaNameLabel.setText("");
+                formulaDescriptionTextPane.setText("");
+            }
+            else {
+                // formula selected
+                var selectedFormula = searchResult.get(index - asSize);
+                formulaNameLabel.setText(selectedFormula.get(FormulaeDatabase.EXPRESSION));
+                formulaDescriptionTextPane.setText(selectedFormula.get(FormulaeDatabase.DESCRIPTION));
+            }
+        });
+
+
+        // ---Key events (switch between text field and result list, press enter to replace text)---
+
+        searchTextField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_DOWN && resultListModel.getSize() > 0) {
+                    // move the focus to the item list
+                    itemList.grabFocus();
+                    itemList.setSelectedIndex(0);
+                }
+            }
+        });
+
+        itemList.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                var selectedIndex = itemList.getSelectedIndex();
+                if (selectedIndex < 0)
+                    return;
+
+                if (e.getKeyCode() == KeyEvent.VK_UP && selectedIndex == 0) {
+                    // remove the focus in item list is put it into text field
+                    itemList.clearSelection();
+                    searchTextField.grabFocus();
+                }
+                // replace text with associated name when clicked enter
+                else if (e.getKeyCode() == KeyEvent.VK_ENTER)
+                    loadTextFromSelection();
+            }
+        });
+
+        itemList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // replace text with associated name when double click
+                if (e.getClickCount() == 2)
+                    loadTextFromSelection();
+            }
         });
 
 
@@ -122,6 +182,8 @@ public class SearchFrame extends JFrame {
     }
 
     /**
+     * created by Raymond 5020 to add prefix to searching text
+     *
      * @param prefix Add this to the front of keyword is it is not currently.
      */
     private void ensurePrefix(String prefix) {
@@ -132,10 +194,19 @@ public class SearchFrame extends JFrame {
         }
     }
 
+    // created by Raymond 5020 to load selected associated name from selection
+    private void loadTextFromSelection() {
+        var index = itemList.getSelectedIndex();
+        if (index >= 0 && index < associatedNames.size())
+            // make sure the index is in associated name range
+            searchTextField.setText(associatedNames.get(index));
+    }
+
+    // created by Raymond 5020 to resize the window according to current need
     private void autoResize() {
-        var preferredHeight = getPreferredSize().height;
-        // ensure the height do not run beyond limit
-        var newHeight = (preferredHeight > HEIGHT_LIMIT) ? HEIGHT_LIMIT : preferredHeight;
+        var itemListPrefer = itemList.getPreferredSize().height;
+        // if there is content in the list, make the window high enough
+        var newHeight = (itemListPrefer > 0) ? FIXED_HEIGHT : controlPanel.getPreferredSize().height;
         setSize(FIXED_WIDTH, newHeight);
     }
 

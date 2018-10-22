@@ -240,5 +240,3 @@ public class EditFrame extends JFrame {
         public void changedUpdate(DocumentEvent e) { }
     }
 }
-
-

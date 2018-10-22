@@ -52,7 +52,7 @@ public class FormulaeSearchAgent {
      * @param keyword The keyword to specify search.
      */
     public void setKeyword(String keyword) {
-        // avoid reanalyze the same keyowrd
+        // avoid reanalyze the same keyword
         if (currentKeyword.equals(keyword))
             return;
         currentKeyword = keyword;
