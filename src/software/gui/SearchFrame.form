@@ -20,7 +20,7 @@
           <component id="b8ddd" class="javax.swing.JLabel" binding="logoLabel">
             <constraints border-constraint="West"/>
             <properties>
-              <icon value="software/resources/physics icon m.png"/>
+              <icon value="software/resources/FormulaeChecker m.png"/>
               <labelFor value="3621c"/>
               <text value=""/>
             </properties>

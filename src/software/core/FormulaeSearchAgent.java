@@ -7,7 +7,7 @@ public class FormulaeSearchAgent {
     private String currentKeyword = "";
 
     /**
-     * The variable that stores search criteria, undated during analyzation process (setKeyword).
+     * The variable that stores search criteria, updated during analyzation process (setKeyword).
      *
      * Each sub array A in this array represent a needed element in the formula.
      * Each element E in A an acceptable alternative for the element that A represents.

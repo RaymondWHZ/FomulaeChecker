@@ -176,6 +176,9 @@ public class EditFrame extends JFrame {
             if (keyValue.length != 2)  // there should a key and a value at each side of =
                 throw new Exception("Wrong syntax at line: " + line);
 
+            if (map.containsKey(keyValue[0]))
+                throw new Exception("Duplicated key at line: " + line);
+
             map.put(keyValue[0], keyValue[1]);
         }
 

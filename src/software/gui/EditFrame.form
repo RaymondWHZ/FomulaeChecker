@@ -111,7 +111,9 @@
                     <children>
                       <component id="69ff4" class="javax.swing.JTextArea" binding="descriptionTextArea">
                         <constraints/>
-                        <properties/>
+                        <properties>
+                          <lineWrap value="true"/>
+                        </properties>
                       </component>
                     </children>
                   </scrollpane>
@@ -128,7 +130,7 @@
                   <scrollpane id="65cf1">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                        <preferred-size width="100" height="-1"/>
+                        <preferred-size width="200" height="-1"/>
                       </grid>
                     </constraints>
                     <properties/>
@@ -190,7 +192,7 @@
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Set each unit configuration:"/>
+                      <text value="Set each symbol name configuration:"/>
                     </properties>
                   </component>
                   <component id="65e62" class="javax.swing.JLabel">
@@ -198,7 +200,7 @@
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="&lt;the unit symbol&gt;=&lt;the variable symbol&gt;"/>
+                      <text value="&lt;name&gt;=&lt;variable symbol&gt;"/>
                     </properties>
                   </component>
                   <vspacer id="22ec9">
@@ -268,7 +270,7 @@
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="&lt;the unit symbol&gt;=&lt;the variable symbol&gt;"/>
+                      <text value="&lt;unit symbol&gt;=&lt;variable symbol&gt;"/>
                     </properties>
                   </component>
                   <vspacer id="680eb">
@@ -330,7 +332,7 @@
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Set each name configuration:"/>
+                      <text value="Set each unit name configuration:"/>
                     </properties>
                   </component>
                   <component id="8b298" class="javax.swing.JLabel">
@@ -338,7 +340,7 @@
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="&lt;the name&gt;=&lt;the variable/unit symbol&gt;"/>
+                      <text value="&lt;name&gt;=&lt;unit symbol&gt;"/>
                     </properties>
                   </component>
                   <vspacer id="4f247">
